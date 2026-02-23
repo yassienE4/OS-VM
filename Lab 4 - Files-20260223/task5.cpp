@@ -6,8 +6,10 @@ using namespace std;
 int counter = 0;
 pthread_mutex_t mutex1;
 
-void* increment(void* arg) {
-    for (int i = 0; i < 100000; i++) {
+void* increment(void* arg) 
+{
+    for (int i = 0; i < 100000; i++) 
+    {
         pthread_mutex_lock(&mutex1);
         counter++;
         pthread_mutex_unlock(&mutex1);

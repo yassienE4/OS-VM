@@ -3,9 +3,14 @@
 
 using namespace std;
 
+void print(int id)
+{
+    cout << "Thread " << id << " running." << endl;
+}
+
 void* worker(void* arg) {
     int* id = (int*) arg;
-    cout << "Thread " << *id << " running." << endl;
+    print(*id);
     pthread_exit(NULL);
 }
 
