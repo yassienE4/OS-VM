@@ -1,0 +1,109 @@
+Theory:
+
+We want to map processes (pages) to physical memory (frames)
+
+We want to know which page to replace when there are no more frames
+
+Aging Algorithm picks least recently used page
+
+How to run
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  cd paging
+\item
+  ./run.sh main.cpp
+\item
+  ./main \textless text path\textgreater{} \textless max
+  frames\textgreater{}
+\end{enumerate}
+
+The code first parses a txt file into a vector using function,
+readReferences()\\
+TXT {[} 0 1 2 3 {]} becomes a vector \{0,1,2,3\}
+
+We then simulate the aging algorithm for each frame count, so if max
+count is 10, we test at 1,2,3 -\textgreater{} 10 etc
+
+Inside each test we first
+
+\begin{itemize}
+\item
+  Initialize each frame using a vector
+
+  \begin{itemize}
+  \item
+    Each frame contains:
+  \item
+    page = -1 // integer
+  \item
+    counter = 0 // unsigned 32 bit integer representing
+  \item
+    referenced = false // bool
+  \end{itemize}
+\item
+  For each page in the reference, we do
+
+  \begin{itemize}
+  \item
+    For each frame we perform an aging shift
+
+    \begin{itemize}
+    \item
+      If the frame was referenced we insert a marker representing ``was
+      used''
+    \item
+      We then dereference the frame
+    \end{itemize}
+  \item
+    For each frame we also check if the page is already loaded
+
+    \begin{itemize}
+    \item
+      We then set the frame as referenced
+    \item
+      If not we add 1 to our fault counter
+    \item
+      And load the page
+    \end{itemize}
+  \item
+    To load the page there is 2 cases
+  \item
+    Case 1: empty frame
+
+    \begin{itemize}
+    \item
+      If any frame is set to -1, we simply insert the page into the
+      frame and set the counter to default.
+    \end{itemize}
+  \item
+    Case 2: memory full
+
+    \begin{itemize}
+    \item
+      We find the frame with the lowest counter under the assumption
+      that lowest counter = least recently used
+    \item
+      We replace that frame with the new page.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+Back in the main function we calculate (faults * 1000.0) /
+references.size(); to find the fault per 1000 ratio, and save it into a
+csv file
+
+\href{https://github.com/yassienE4/OS-VM/commit/9cb4d216bf407f2de9805f43f24f37ef53de1d85}{\ul{https://github.com/yassienE4/OS-VM/commit/9cb4d216bf407f2de9805f43f24f37ef53de1d85}}
+
+\textbf{Testing}
+
+I found that after the number of unique pages, the number of max frames
+do not matter,
+
+Eg, pages = 0-10, so 11 unique pages
+
+After 11 frames the number of frames wont make a difference
+
+The only faults will be the initial 11 faults found when first loading
+the pages.

@@ -1,0 +1,36 @@
+\href{https://github.com/yassienE4/OS-VM/commit/48d51e62658d47fa3c8d2de21cb3f8fb4115c635}{\ul{https://github.com/yassienE4/OS-VM/commit/48d51e62658d47fa3c8d2de21cb3f8fb4115c635}}
+
+How to run
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  cd task2
+\item
+  ./run.sh main.cpp
+\item
+  ./main \textless text path\textgreater{} \textless number of threads
+  used\textgreater{}
+\end{enumerate}
+
+The code takes 2 parameters, a txt file containing text, and an integer
+which is the number of threads you\textquotesingle d like to use.
+
+test.txt is included as an example
+
+The code is fairly simple, after first verifying and validating the
+parameters, then it splits the text file into equal n segments, it does
+this by checking the length against n, and also making sure that it
+doesn\textquotesingle t cut words in half by moving by 1 index until
+reaching a non alpha numeric character. It then returns an array of
+integers pairs referring to first and last index,
+
+Eg. \{ (0,100), (100,200) \}
+
+Once i have the text splitted, the code creates n threads and adds the
+words to a local map, each map has a local map so that we can see how
+many words are in each segment,
+
+Once each thread is done, and we have a collection of local maps, we
+consolidate them into one final map which contains the occurrence of
+each word.

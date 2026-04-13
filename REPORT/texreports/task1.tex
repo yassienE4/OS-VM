@@ -1,0 +1,56 @@
+\href{https://github.com/yassienE4/OS-VM/commit/929f4ec3803c7845995459e7b9b7fca693f79cf8}{\ul{https://github.com/yassienE4/OS-VM/commit/929f4ec3803c7845995459e7b9b7fca693f79cf8}}
+
+How to run in command mode
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  cd The-Shell
+\item
+  ./run.sh main.cpp
+\end{enumerate}
+
+How to run in file mode
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  cd The-Shell
+\item
+  g++ -std=c++17 -w main.cpp -o main
+\item
+  ./main args
+\end{enumerate}
+
+The code takes a txt file as args which should include commands
+
+Commands.txt is included as an example
+
+The code works by first checking the arguments that the code was started
+with, if no arguments it starts a loop to get commands via inputs, while
+if there are args it looks for a file and reads the commands line by
+line from that file.
+
+It then parses the commands into a custom data structure i created,
+commands.h
+
+string name;
+
+vector\textless string\textgreater{} args;
+
+string inFile;
+
+string outFile;
+
+bool append;
+
+bool background;
+
+bool isBuildIn;
+
+The data structure allows me to understand the data and execute the
+correct command according to if there is a built in version, it runs in
+the background, it reads or writes to a file etc.
+
+The commands are then executed either via forking and then executing or,
+by implementing the behaviors using C system functions
